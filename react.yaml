@@ -1,9 +1,10 @@
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: react
   labels:
     app: react
+  namespace: jenkins
 spec:
   selector:
     matchLabels:
@@ -18,7 +19,7 @@ spec:
         tier: frontend
     spec:
       containers:
-      - image: https://index.docker.io/v1/react-app:latest
+      - image: phyozayarkyaw/react-app:latest
         name: react
         ports:
         - containerPort: 8080
