@@ -12,12 +12,17 @@ pipeline {
 	stage('Install kubectl') {
             steps {
                 script {
-                    // Install kubectl using apt (requires root permissions)
+                    // Installing kubectl if not installed
                     sh '''
                         if ! command -v kubectl &> /dev/null
                         then
                             echo "kubectl not found, installing..."
-                            apt-get update && apt-get install -y kubectl
+                            curl -LO "https://dl.k8s.io/release/v1.26.0/bin/linux/amd64/kubectl"
+                            chmod +x kubectl
+                            mkdir -p $HOME/bin
+                            mv kubectl $HOME/bin/
+                            echo "kubectl installed in $HOME/bin"
+                            export PATH=$PATH:$HOME/bin
                         else
                             echo "kubectl is already installed"
                         fi
