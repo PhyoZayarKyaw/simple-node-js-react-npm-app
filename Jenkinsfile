@@ -9,6 +9,24 @@ pipeline {
                 sh 'npm install' 
             }
         }
+        stage('Install kubectl') {
+            steps {
+                script {
+                    // Installing kubectl if not installed
+                    sh '''
+                        if ! command -v kubectl &> /dev/null
+                        then
+                            echo "kubectl not found, installing..."
+                            curl -LO "https://dl.k8s.io/release/v1.26.0/bin/linux/amd64/kubectl"
+                            chmod +x kubectl
+                            mv kubectl /usr/local/bin/
+                        else
+                            echo "kubectl is already installed"
+                        fi
+                    '''
+                }
+            }
+        }
         stage('Test') {
             steps {
                 sh './jenkins/scripts/test.sh'
