@@ -17,7 +17,7 @@ pipeline {
                         if ! command -v kubectl &> /dev/null
                         then
                             echo "kubectl not found, installing..."
-                            sudo apt-get update && sudo apt-get install -y kubectl
+                            apt-get update && apt-get install -y kubectl
                         else
                             echo "kubectl is already installed"
                         fi
