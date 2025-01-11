@@ -9,8 +9,9 @@ pipeline {
         stage('Install kubectl') {
             steps {
                 script {
-                    // Check if kubectl is installed and install if necessary
+                    // Ensure the directory exists
                     sh '''
+                        mkdir -p $HOME/bin
                         if ! command -v kubectl &> /dev/null
                         then
                             echo "kubectl not found, installing..."
@@ -18,13 +19,13 @@ pipeline {
                             chmod +x kubectl
                             mv kubectl $HOME/bin/
                             echo "kubectl installed in $HOME/bin"
-                            export PATH=$PATH:$HOME/bin
                         else
                             echo "kubectl is already installed"
                         fi
                     '''
                 }
             }
+        }
         }
         stage('Build') {
             steps {
