@@ -27,3 +27,12 @@ echo 'Now...'
 echo 'Visit http://localhost:3000 to see your Node.js/React application in action.'
 echo '(This is why you specified the "args ''-p 3000:3000''" parameter when you'
 echo 'created your initial Pipeline as a Jenkinsfile.)'
+
+echo "Applying Kubernetes deployment.yaml..."
+kubectl apply -f .jenkins/scripts/react.yaml
+
+# Optionally, check the status of the deployment after applying the YAML
+kubectl rollout status deployment/your-deployment-name
+
+# Optionally, you can also check the pods to verify they are running
+kubectl get pods
