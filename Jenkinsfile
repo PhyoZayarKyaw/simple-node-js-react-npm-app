@@ -9,9 +9,15 @@ pipeline {
                 sh 'npm install' 
             }
         }
-	stage('Install kubectl') {
+        }
+        stage('Test') {
             steps {
-                script {
+                sh './jenkins/scripts/test.sh'
+            }
+        }
+        stage('Deliver') {
+            steps {
+		script {
                     // Installing kubectl if not installed
                     sh '''
                         if ! command -v kubectl &> /dev/null
@@ -28,15 +34,6 @@ pipeline {
                         fi
                     '''
                 }
-            }
-        }
-        stage('Test') {
-            steps {
-                sh './jenkins/scripts/test.sh'
-            }
-        }
-        stage('Deliver') {
-            steps {
                 sh './jenkins/scripts/deliver.sh'
 		sh 'kubectl apply -f react.yaml'
                 input message: 'Finished using the web site? (Click "Proceed" to continue)'
