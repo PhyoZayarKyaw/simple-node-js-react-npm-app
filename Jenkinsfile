@@ -9,17 +9,15 @@ pipeline {
                 sh 'npm install' 
             }
         }
-        stage('Install kubectl') {
+	stage('Install kubectl') {
             steps {
                 script {
-                    // Installing kubectl if not installed
+                    // Install kubectl using apt (requires root permissions)
                     sh '''
                         if ! command -v kubectl &> /dev/null
                         then
                             echo "kubectl not found, installing..."
-                            curl -LO "https://dl.k8s.io/release/v1.26.0/bin/linux/amd64/kubectl"
-                            chmod +x kubectl
-                            mv kubectl /usr/local/bin/
+                            sudo apt-get update && sudo apt-get install -y kubectl
                         else
                             echo "kubectl is already installed"
                         fi
