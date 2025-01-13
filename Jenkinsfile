@@ -2,7 +2,6 @@ pipeline {
     agent {
     	kubernetes {
              inheritFrom 'Kubernetes' // Name of your pod template
-	     label 'jenkins-jenkins-agent'
              defaultContainer 'kubernetes-container' // The container you want to run commands in
         }
     }
