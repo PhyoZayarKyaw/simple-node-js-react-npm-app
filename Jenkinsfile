@@ -1,10 +1,5 @@
 pipeline {
-    agent {
-	 kubernetes {
-	     inheritFrom 'Kubernetes' // Name of your pod template
-             defaultContainer 'kubernetes-container' // The container you want to run commands in
-        }
-    }
+    agent any
 
     tools {
         nodejs 'NodeJS'  // This should match the name you gave the Node.js installation in Jenkins
