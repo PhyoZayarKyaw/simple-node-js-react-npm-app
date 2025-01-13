@@ -28,3 +28,4 @@ spec:
           name: https
       imagePullSecrets:
       - name: regcred
+
