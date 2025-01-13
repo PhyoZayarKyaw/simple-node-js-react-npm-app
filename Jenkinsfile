@@ -1,16 +1,8 @@
 pipeline {
-    agent {
-        kubernetes {
-             inheritFrom 'Kubernetes' // Name of your pod template
-             defaultContainer 'kubernetes-container' // The container you want to run commands in
-        }
-    }
+    agent any
 
     tools {
         nodejs 'NodeJS'  // This should match the name you gave the Node.js installation in Jenkins
-    }
-    environment {
-        KUBECONFIG = '~/.kube/config'  // Specify the correct path to kubeconfig
     }
 
     stages {
@@ -29,6 +21,9 @@ pipeline {
         stage('Deliver') {
             steps {
                 sh './jenkins/scripts/deliver.sh'
+		sh 'curl -LO "https://storage.googleapis.com/kubernetes-release/release/v1.20.5/bin/linux/amd64/kubectl"'  
+        	sh 'chmod u+x ./kubectl'  
+        	sh './kubectl get pods'
                 sh 'kubectl apply -f react.yaml'
                 input message: 'Finished using the web ? (Click "Proceed" to continue)'
                 sh './jenkins/scripts/kill.sh'
