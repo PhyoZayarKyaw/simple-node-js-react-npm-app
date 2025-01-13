@@ -9,6 +9,9 @@ pipeline {
     tools {
         nodejs 'NodeJS'  // This should match the name you gave the Node.js installation in Jenkins
     }
+    environment {
+        KUBECONFIG = '~/.kube/config'  // Specify the correct path to kubeconfig
+    }
 
     stages {
         stage('Build') {
