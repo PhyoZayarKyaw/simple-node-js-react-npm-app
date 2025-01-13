@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+	 kubernetes {
+            label 'jenkins-jenkins-agent'
+            defaultContainer 'kubectl-container'
+        }
+    }
 
     tools {
         nodejs 'NodeJS'  // This should match the name you gave the Node.js installation in Jenkins
